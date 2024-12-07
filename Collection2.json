@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "7469be4c-023e-438c-b113-550630e61d61",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27820180"
+	},
+	"item": [
+		{
+			"name": "Login user and get tokens",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"let accessToken = pm.response.json().accessToken;\r",
+							"pm.environment.set(\"accessToken\", accessToken);\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"emilys\",\r\n    \"password\": \"emilyspass\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/auth/login",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get current auth user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"access\": \"{{accessToken}}\",\r\n  \"first\": \"{{firstName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/auth/me?token={{accessToken}}",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"auth",
+						"me"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh auth session",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/auth/refresh",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
